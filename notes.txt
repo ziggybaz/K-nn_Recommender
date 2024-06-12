@@ -1,0 +1,29 @@
+			K-NEAREST NEIGHBOUR
+There's no special spin to my implementation, it's just one of those things I've wanted to know the underlying workings in-depth,
+So don't look at this project as a source for learning the algorithm, you'll be better off reading the whitepaper.
+
+Re-inventing the wheel? 
+Nah, I'm just parroting what's already out there to improve my understanding of the subject-matter (might even endup improving or disproving the thesis, lol).
+
+So what is it?
+Well in basic terms, K-Nearest Neighbour is a simple classification algorithm.
+
+What am I trying to figure out?
+I'm trying to find the best value for 'K' to improve the performance. It's out there, and I will find it.
+
+
+
+
+
+
+
+
+Sources:
+	1. Grokking algorithms by Adit Bhargavya.
+a good starting point that without being bogged-down by the math. This has to be the simplest explanation out there, even a child would understand
+Link:https://www.amazon.com/Grokking-Algorithms-illustrated-programmers-curious/dp/1617292230. (wasn't able to find a snippet so the book link will do)
+
+	2.K-NN Whitepaper.
+is a paper that addresses the shortcomings of the algorithm (low efficency && dependence on the selection of a 'good value' for `K`).
+*they solve or try to solve the 'dimensionality curse' by creating a system that automatically determines the value of 'K'
+Link:https://www.researchgate.net/publication/2948052_KNN_Model-Based_Approach_in_Classification
