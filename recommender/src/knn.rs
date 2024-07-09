@@ -101,6 +101,6 @@ pub fn classify_with_dynamic_k_value(data: &[DataPoint], test_point: &DataPoint)
 
     class_counts.into_iter()
         .max_by_key(|&(_, count)| count)
-        .map(|label, _)| label)
+        .map(|(label, _)| label)
         .unwrap_or_else(|| "Error".to_string())
 }
