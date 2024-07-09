@@ -5,8 +5,8 @@ use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
 pub struct DataPoint {
-    features: Vec<f64>,
-    label: Option<String>,
+    pub features: Vec<f64>,
+    pub label: Option<String>,
 }
 
 pub fn normalize(data: &mut [DataPoint]) {
@@ -46,12 +46,12 @@ pub fn apply_pca(data: &[DataPoint], n_components: usize) -> Vec<DataPoint> {
     for i in 0..n_samples {
         let mut transformed_features = vec![];
         for j in 0..n_components { transformed_features.push(eig.eigenvectors.column(j).dot(&matrix.row(i).transpose())) }
-    }
+    
     pca_data.push(DataPoint {
-        features: transformed_features.clone(),
+        features:transformed_features,
         label: data[i].label.clone(),
     });
-
+    }
     pca_data
 }
 
