@@ -105,3 +105,81 @@ pub fn classify_with_dynamic_k_value(data: &[DataPoint], test_point: &DataPoint)
         .map(|(label, _)| label)
         .unwrap_or_else(|| "Error".to_string())
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_euclidean_distance() {
+        let point_a = DataPoint { features: vec![1.0, 2.4], label: Some("Ziggy".to_string()) };
+        let point_b = DataPoint { features: vec![1.0, 7.0], label: Some("baz".to_string()) };
+        let distance = euclidean_distance(&point_a, &point_b);
+
+        assert_ne!(distance, 5.2);
+    }
+
+    #[test]
+    fn test_classify_with_dynamic_k_value() {
+        let data = vec!{
+            DataPoint { features: vec![1.3, 2.1], label: Some("baz".to_string()) },
+            DataPoint { features: vec![5.6, 6.8], label: Some("Ziggy".to_string()) },
+        };
+        let test_point = DataPoint { features: vec![3.0, 5.0], label: Some("noname".to_string()) };
+        let predicted_label = classify_with_dynamic_k_value(&data, &test_point);
+
+        assert_eq!(predicted_label, "baz");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
