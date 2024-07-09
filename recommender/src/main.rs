@@ -1,6 +1,6 @@
 mod knn;
 
-use knn::{normalize, apply_pca, classify_with_dynamic_k_value};
+use crate::knn::{DataPoint, normalize, apply_pca, classify_with_dynamic_k_value};
 
 fn main() {
     let mut data: Vec<DataPoint> = vec![

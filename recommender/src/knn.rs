@@ -2,8 +2,8 @@ extern crate nalgebra as na;
 use na::{DMatrix, DVector};
 use std::collections::HashMap;
 
-#![derive(Debug, Clone)]
-struct DataPoint {
+#[derive(Debug, Clone)]
+pub struct DataPoint {
     features: Vec<f64>,
     label: Option<String>,
 }
@@ -13,7 +13,7 @@ pub fn normalize(data: &mut [DataPoint]) {
 
     for i in 0..n_features {
         let mut minimum_value = f64::INFINITY;
-        let mut maximum_value = f4::NEG_INFINITY;
+        let mut maximum_value = f64::NEG_INFINITY;
 
         for point in data.iter() {
             minimum_value = minimum_value.min(pointfeatures[i]);
@@ -63,7 +63,7 @@ pub fn eulidean_distance(a:&DataPoint, b: &DataPoint) -> f64 {
 }
 
 pub fn calculate_local_density(data: &[DataPoint], point:&DataPoint) -> f64 {
-    let mut distance: Vec<f64> = data.iter()
+    let mut distances: Vec<f64> = data.iter()
         .map(|other| euclidean_distance(point, other))
         .collect();
 
@@ -102,5 +102,5 @@ pub fn classify_with_dynamic_k_value(data: &[DataPoint], test_point: &DataPoint)
     class_counts.into_iter()
         .max_by_key(|&(_, count)| count)
         .map(|(label, _)| label)
-        .unwrap_or_else(|| "Error".to_string())
+        .unwrap_or_else(|| &"Error".to_string())
 }
