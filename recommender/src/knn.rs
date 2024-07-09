@@ -1,5 +1,6 @@
 extern crate nalgebra as na;
-use na::{DMatrix, DVector};
+
+use na::{DMatrix};
 use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
@@ -16,7 +17,7 @@ pub fn normalize(data: &mut [DataPoint]) {
         let mut maximum_value = f64::NEG_INFINITY;
 
         for point in data.iter() {
-            minimum_value = minimum_value.min(pointfeatures[i]);
+            minimum_value = minimum_value.min(point.features[i]);
             maximum_value = maximum_value.max(point.features[i]);
         }
 
@@ -26,7 +27,7 @@ pub fn normalize(data: &mut [DataPoint]) {
     }
 }
 
-pub fn apply_pca(data: [DataPoint], n_components: usize) -> Vec<DataPoint> {
+pub fn apply_pca(data: &[DataPoint], n_components: usize) -> Vec<DataPoint> {
     let n_samples = data.len();
     let n_features = data[0].features.len();
 
@@ -38,23 +39,23 @@ pub fn apply_pca(data: [DataPoint], n_components: usize) -> Vec<DataPoint> {
         }
     }
 
-    let cov_matrix = (matrix.transpose() * matrix.clone()) / (n_samples as f64 - 1.0);
+    let cov_matrix = (matrix.transpose() * &matrix) / (n_samples as f64 - 1.0);
     let eig = cov_matrix.symmetric_eigen();
 
     let mut pca_data = vec![];
     for i in 0..n_samples {
-        let mut features = vec![];
-        for i in 0..n_components { features.push(eig.eigenvectors.column(j).dot(&matrix.row(i).transpose())) }
+        let mut transformed_features = vec![];
+        for j in 0..n_components { transformed_features.push(eig.eigenvectors.column(j).dot(&matrix.row(i).transpose())) }
     }
     pca_data.push(DataPoint {
-        features,
+        features: transformed_features.clone(),
         label: data[i].label.clone(),
     });
 
     pca_data
 }
 
-pub fn eulidean_distance(a:&DataPoint, b: &DataPoint) -> f64 {
+pub fn euclidean_distance(a:&DataPoint, b: &DataPoint) -> f64 {
     a.features.iter()
         .zip(&b.features)
         .map(|(x, y)| (x - y).powi(2))
@@ -78,7 +79,7 @@ pub fn determine_dynamic_k_value(data: &[DataPoint], point: &DataPoint) -> usize
     let k_minimum_value = 1;
     let k_maximum_value = 15;
 
-    let optimal_k_value = ((local_density * (k_maximum_value as f64 - k_minimum_value as f64)).cell() as usize).min(k_maximum_value).max(k_minimum_value);
+    let optimal_k_value = ((local_density * (k_maximum_value as f64 - k_minimum_value as f64)).ceil() as usize).min(k_maximum_value).max(k_minimum_value);
 
     optimal_k_value
 }
@@ -96,11 +97,11 @@ pub fn classify_with_dynamic_k_value(data: &[DataPoint], test_point: &DataPoint)
 
     let mut class_counts = HashMap::new();
     for (_, label) in distances.iter().take(k) {
-        *class_counts.entry(label).or_insert(0) += 1;
+        *class_counts.entry(label.clone()).or_insert(0) += 1;
     }
 
     class_counts.into_iter()
         .max_by_key(|&(_, count)| count)
         .map(|(label, _)| label)
-        .unwrap_or_else(|| &"Error".to_string())
+        .unwrap_or_else(|| "Error".to_string())
 }
