@@ -1,22 +1,29 @@
 			K-NEAREST NEIGHBOUR
 There's no special spin to my implementation, it's just one of those things I've wanted to know the underlying workings in-depth,
 So don't look at this project as a source for learning the algorithm, you'll be better off reading the whitepaper.
+Also, this is just the logic implementation, I won't be using any data-set to train its peformance.
 
 Re-inventing the wheel? 
-Nah, I'm just parroting what's already out there to improve my understanding of the subject-matter (might even endup improving or disproving the thesis, lol).
+Nah, I'm just parroting what's already out there to improve my understanding of the subject-matter (might even end up improving or disproving the thesis, lol).
 
 So what is it?
-Well in basic terms, K-Nearest Neighbour is a simple classification algorithm.
+Well in basic terms, K-Nearest Neighbour is a non-parametric classification algorithm.
 
 What am I trying to figure out?
-I'm trying to find the best value for 'K' to improve the performance. It's out there, and I will find it.
+I'm trying to find the best value for 'K' to improve the efficiency of, and optimize my recommendation systems. It's out there, and I will find it.
+In-order to achieve this, eliminating the curse of dimensionality, Gongde proposed a method to automatically adjust 'K' based on the data's characteristics.
 
 
+Howdidit?
+Automatically determine a suitable 'K' value by using a dynamic 'K' that adjusts based on local density, ensuring the algorithm remains effective across varying regions of the feature space.
+so, to address the issue the paper suggested Principal Component Analysis to reduce the number of features while retaining significant variance, thus making the algo more efficient and accurate.
+here's how I implemented it:
+a. Local Density Calculation: the function computes the average distance to the nearest neighbors to estimate local density.
+b. Optimal K selection: *based on density, adjusts 'K' therefore ensuring 'K' varies with the data's characteristics.
+c. Dynamic K-NN classification: Uses the dynamic 'K' value for classifying test points
 
-
-
-
-
+testing.
+i did not use a data set, my tests are just basic unit tests to ensure the logic runs correctly
 
 Sources:
 	1. Grokking algorithms by Adit Bhargavya.
