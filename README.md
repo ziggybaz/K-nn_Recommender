@@ -1,1 +1,3 @@
-provide a readme
+refer to notes.txt
+
+not maintained
